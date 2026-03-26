@@ -20,9 +20,7 @@ int main() {
     PointMass& center = sim.addPointMass(1000, Vector3d(250, 250, 0));
     center.setName("center");
     PointMass& middle = sim.addPointMass(1, Vector3d(300, 250, 0), Vector3d(0, -5, 0));
-    middle.setName("middle");
-    PointMass& outer = sim.addPointMass(5, Vector3d(400, 250, 0), Vector3d(0, -5, 0));
-    outer.setName("outer");    
+    middle.setName("middle");   
 
 
     while(!sim.is_finished()){
