@@ -36,6 +36,8 @@ class Mass{
 
     virtual void draw(TDT4102::AnimationWindow*){}
 
-    double getKineticEnergy();
-    double getNextKineticEnergy();
+    double getKineticEnergy() const;
+    double getNextKineticEnergy() const;
+
+    Vector3d getMomentum() const;
 };

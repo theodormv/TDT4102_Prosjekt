@@ -21,13 +21,17 @@ Mass::Mass(){
 Mass::Mass(double m, const Vector3d& pos, const Vector3d& vel) :
  mass(m), position(pos), velocity(vel), nextPosition(pos), nextVelocity(vel){}
 
-double Mass::getKineticEnergy(){
+double Mass::getKineticEnergy() const {
     return Physics::kineticEnergy(mass, velocity);
 }
 
-double Mass::getNextKineticEnergy(){
+double Mass::getNextKineticEnergy() const {
     return Physics::kineticEnergy(mass, nextVelocity);
 }
 
 const Vector3d& Mass::setNextPosition(const Vector3d& next) {nextPosition = next; return nextPosition;}
 const Vector3d& Mass::setNextVelocity(const Vector3d& next) {nextVelocity = next; return nextVelocity;}
+
+Vector3d Mass::getMomentum() const {
+    return velocity*mass;
+}

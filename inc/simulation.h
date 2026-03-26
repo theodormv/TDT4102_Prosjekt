@@ -1,8 +1,13 @@
 #pragma once
 #include "AnimationWindow.h"
+#include "widgets/button.h"
 #include "pointmass.h"
 #include "math.h"
 #include <fstream>
+
+
+#define WIDTH 700
+#define HEIGHT 700
 
 
 
@@ -11,8 +16,8 @@ class Simulation: public TDT4102::AnimationWindow{
 
     double timestep = 5e-4;
     double time = 0; 
-    double energySamplePeriod = 100;
-    double lastSampleTime = 0;
+    double energySamplePeriod = 10;
+    double lastSampleTime = -__DBL_MAX__;
 
     void update_physics();
     void update_window();
@@ -26,22 +31,30 @@ class Simulation: public TDT4102::AnimationWindow{
     double totalPotential = 0;
 
 
-    double tol = 1e-5;
+    double tol = 5e-4;
+    void RungeKuttaGravityCalculation2Bodies();
+    void RungeKutta4OrderStep2Bodies(PointMass * m1, PointMass * m2); // støtter bare interaksjoner mellom 2 masser
     void RungeKuttaGravityCalculation();
-    void RungeKutta4OrderStep(PointMass * m1, PointMass * m2);
+    void RungeKutta4OrderStep(PointMass * mass); //generell funkjon for større systemer
     bool timestepControlShouldContinue();
 
 
-    double getTotalEnergy();
-    double getTotalPotentialEnergy();
-    double getTotalKineticEnergy();
+    double getTotalEnergy() const;
+    double getTotalPotentialEnergy() const;
+    double getTotalKineticEnergy() const;
     void writeEnergy();
+
+    Vector3d getTotalMomentum() const;
 
     double getNextTotalKineticEnergy();
     double getNextTotalPotentialEnergy();
     double getNextTotalEnergy();
 
-    //void RungeKutta4OrderStep();
+
+    static TDT4102::Button pauseButton;
+    static void pauseFunction();
+    static bool paused;
+
     public:
 
     Simulation();
@@ -49,9 +62,13 @@ class Simulation: public TDT4102::AnimationWindow{
 
     ~Simulation();
 
+
+
     //void loadInitialValues(std::string filepath);
 
     void initOutput();
+    void initWindow();
+
 
     template<typename ... Margs> 
     //varadic template gjør at jeg kan legge til pointmasses med alle konstruktørene uten å måtte overloade

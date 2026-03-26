@@ -1,6 +1,7 @@
 #andre filformater
 *.pdf
 *.json
+default.txt
 
 # Prerequisites
 *.d

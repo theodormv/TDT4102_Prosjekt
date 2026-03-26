@@ -250,7 +250,7 @@ private:
 	}
 
 template<std::size_t dimN, typename U>
-std::ostream& operator<< (std::ostream& console, const VectorNd<dimN, U>& vec) {
+std::ostream& operator<< (std::ostream& console, const VectorNd<dimN, U>& vec){
 	console << '[';
 	for (int i = 0; i < dimN-1; i++) console << vec.get(i) << ", ";
 	console << vec.get(dimN - 1);
