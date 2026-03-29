@@ -18,7 +18,7 @@ int main() {
     Simulation sim(50, 50, WIDTH, HEIGHT, "simulation");
 
     
-    sim.loadFromFile("./input/stable_three_body_problem.txt");
+    sim.loadFromFile("./input/three_body_problem.txt");
 
     while(!sim.is_finished()){
         sim.update();
