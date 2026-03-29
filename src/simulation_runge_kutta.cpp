@@ -52,18 +52,29 @@ void Simulation::RungeKutta4OrderStep(PointMass* mass){
 }
 
 
+struct ZeroLocalError : public std::runtime_error{
+    ZeroLocalError(std::string errorMessage) : std::runtime_error(errorMessage){}
+};
 
 bool Simulation::timestepControlShouldContinue(){
     double localError = abs(getTotalEnergy() - getNextTotalEnergy());
-    
-    if (localError > tol){
+    double multiplier;
+    try{ 
+        if(localError == 0) throw ZeroLocalError("there is zero local error");
 
-        double multiplier =  std::pow(tol/localError, 0.2);
-        //std::cout << multiplier << std::endl;
-        timestep = multiplier * timestep;
-        return true;
-    }
-    return false;
+        multiplier =  std::pow(tol/localError, 0.2);
+      
+    } catch(ZeroLocalError& error){
+        multiplier = 1;
+    }  
+
+    timestep = multiplier * timestep;
+    if(timestep > 5e-4) timestep = 5e-4;
+    
+    
+    if (localError > tol) return true;
+    else return false;
+    
 }  
 
 

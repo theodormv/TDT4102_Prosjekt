@@ -75,7 +75,7 @@ public:
 		elements[index] = val;
 	}
 	
-	T get(int index) const {
+	T get(size_t index) const {
 		return elements[index];
 	}
 

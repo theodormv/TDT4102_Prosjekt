@@ -56,13 +56,35 @@ void Simulation::update(){
         }
     }
     
-
-    if(iterations%5000 == 0)
+    auto now = std::chrono::system_clock::now();
+    if(now >= lastRender + renderPeriod){
         update_window();
+        lastRender = now;
+    }
+
 
 
     iterations++;
 }
+
+void Simulation::loadFromFile(std::string filepath){
+    std::ifstream input(filepath);
+    
+    input.ignore(100, '\n');
+
+
+        
+        while(!input.eof()){
+            try{
+                std::string lineString;
+                getline(input, lineString);
+                addPointMass(lineString);
+            } catch (BadMassDescription& bmd){
+                std::cerr << "Error: " << bmd.what() << std::endl;
+            }
+        }
+
+        }
 
 
 
@@ -71,7 +93,7 @@ void Simulation::update_window(){
     for (auto it = pointMasses.begin(); it != pointMasses.end(); it++){
         it->draw(this);
     }
-
+    drawCenterOfMass();
     
     std::string timeString = std::format("t = {}", std::round(time*100)/100.f);
     this->draw_text({0,0}, timeString, TDT4102::Color(0xffffff));
@@ -79,12 +101,17 @@ void Simulation::update_window(){
     this->next_frame();
 }
 
+void Simulation::drawCenterOfMass() {
+    this->draw_circle(getCenterOfMass().toPoint2d(), 1, TDT4102::Color(0x00ff00));
+}
+
+
 void Simulation::writeEnergy() {
     std::stringstream momentumVector;
     momentumVector << getTotalMomentum();
 
     energyOutputFile << std::setw(8) << time << ";" << std::setw(15) << totalPotential << ";" << std::setw(15) << totalKinetic <<";" 
-    << std::setw(15) << getTotalEnergy() <<";" <<std::setw(30) << momentumVector.str() <<";\n";
+    << std::setw(15) << getTotalEnergy() <<";" <<std::setw(35) << momentumVector.str() <<";\n";
 }
 
 Simulation::~Simulation(){

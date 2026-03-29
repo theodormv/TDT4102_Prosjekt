@@ -73,3 +73,13 @@ Vector3d Simulation::getTotalMomentum() const{
     return workingMomentum;
 }
 
+Vector3d Simulation::getCenterOfMass() const{
+    Vector3d workingCenter = {0,0,0};
+    double workingTotalMass = 0;
+    for (auto it = pointMasses.begin(); it < pointMasses.end(); it++){
+        workingCenter += it->getNextPosition()*it->getMass();
+        workingTotalMass += it->getMass();
+    }
+
+    return workingCenter/workingTotalMass;
+}

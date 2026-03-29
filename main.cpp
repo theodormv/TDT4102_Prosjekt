@@ -14,20 +14,11 @@
 
 int main() {
 
-    Simulation sim(350, 50, WIDTH, HEIGHT, "simulation");
+
+    Simulation sim(50, 50, WIDTH, HEIGHT, "simulation");
 
     
-    
-    
-    PointMass& center = sim.addPointMass(12, Vector3d(250, 250, 0));
-    center.setName("center");
-
-    PointMass& middle = sim.addPointMass(8, Vector3d(300, 250, 0), Vector3d(0, 0.1, 0));
-    middle.setName("middle");
-
-    PointMass& outer = sim.addPointMass(100, Vector3d(270, 325, 0), Vector3d(0, -1, 0));
-    outer.setName("outer");
-
+    sim.loadFromFile("./input/stable_three_body_problem.txt");
 
     while(!sim.is_finished()){
         sim.update();

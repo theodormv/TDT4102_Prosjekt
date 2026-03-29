@@ -18,7 +18,7 @@
 #include "widgets/Button.h"
 static bool sdlHasBeenInitialised = false;
 
-TDT4102::AnimationWindow::AnimationWindow(int x, int y, int width, int height, const std::string& title) {
+TDT4102::AnimationWindow::AnimationWindow(size_t x, size_t y, size_t width, size_t height, const std::string& title) {
     // Initialise SDL if it has not already been
     if (!sdlHasBeenInitialised) {
         if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0) {

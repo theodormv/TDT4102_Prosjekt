@@ -1,0 +1,4 @@
+Name; Mass; X coordinate; Y coordinate; X velocity; Y velocity;
+SOL 1000 532 382  0 -1.45
+PLANET 1000 732 382 0 1.45
+SATELLITE 10 800 382  0 4.9

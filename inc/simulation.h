@@ -4,9 +4,10 @@
 #include "pointmass.h"
 #include "math.h"
 #include <fstream>
+#include <chrono>
 
 
-#define WIDTH 700
+#define WIDTH 1064
 #define HEIGHT 700
 
 
@@ -19,18 +20,14 @@ class Simulation: public TDT4102::AnimationWindow{
     double energySamplePeriod = 10;
     double lastSampleTime = -__DBL_MAX__;
 
-    void update_physics();
-    void update_window();
+
 
     unsigned long int iterations = 0;
 
-    std::string energyOutputFilePath = "./output/default.txt";
+    std::string energyOutputFilePath = "./output/energy.txt";
     std::ofstream energyOutputFile = NULL;
 
-    double totalKinetic = 0;
-    double totalPotential = 0;
-
-
+    //runge kutta method
     double tol = 5e-4;
     void RungeKuttaGravityCalculation2Bodies();
     void RungeKutta4OrderStep2Bodies(PointMass * m1, PointMass * m2); // støtter bare interaksjoner mellom 2 masser
@@ -38,6 +35,11 @@ class Simulation: public TDT4102::AnimationWindow{
     void RungeKutta4OrderStep(PointMass * mass); //generell funkjon for større systemer
     bool timestepControlShouldContinue();
 
+    //physics 
+    double totalKinetic = 0;
+    double totalPotential = 0;
+
+    void update_physics();
 
     double getTotalEnergy() const;
     double getTotalPotentialEnergy() const;
@@ -45,34 +47,43 @@ class Simulation: public TDT4102::AnimationWindow{
     void writeEnergy();
 
     Vector3d getTotalMomentum() const;
+    Vector3d getCenterOfMass() const;
 
     double getNextTotalKineticEnergy();
     double getNextTotalPotentialEnergy();
     double getNextTotalEnergy();
 
 
+
+    //Widgets
     static TDT4102::Button pauseButton;
     static void pauseFunction();
     static bool paused;
+
+    //inits
+    void initOutput();
+    void initWindow();
+
+    //rendering 
+    std::chrono::time_point<std::chrono::system_clock> lastRender; 
+    std::chrono::milliseconds renderPeriod = std::chrono::milliseconds(20); //milli seconds
+
+
+    void update_window();
+    void drawCenterOfMass();
 
     public:
 
     Simulation();
     Simulation(size_t x, size_t y, size_t width, size_t height, std::string window_name);
-
     ~Simulation();
 
 
-
-    //void loadInitialValues(std::string filepath);
-
-    void initOutput();
-    void initWindow();
-
+    void loadFromFile(std::string filepath);
 
     template<typename ... Margs> 
     //varadic template gjør at jeg kan legge til pointmasses med alle konstruktørene uten å måtte overloade
-    PointMass& addPointMass(Margs&& ... args){
+    PointMass& addPointMass(Margs ... args){
         pointMasses.emplace_back(args...);
         totalKinetic = getTotalKineticEnergy();
         totalPotential = getTotalPotentialEnergy();

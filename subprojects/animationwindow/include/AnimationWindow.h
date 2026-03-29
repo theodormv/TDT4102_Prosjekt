@@ -76,7 +76,7 @@ class AnimationWindow {
     float deltaMouseWheel = 0;
 
    public:
-    explicit AnimationWindow(int x = 50, int y = 50, int width = 1024, int height = 768, const std::string& title = "Animation Window");
+    explicit AnimationWindow(size_t x = 50, size_t y = 50, size_t width = 1024, size_t height = 768, const std::string& title = "Animation Window");
     ~AnimationWindow();
 
     // When you have finished drawing a frame, call this function to display it (usually at the end of your main while loop)

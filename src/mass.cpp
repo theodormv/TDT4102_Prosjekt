@@ -1,13 +1,5 @@
 #include "../inc/mass.h"
 
-const Vector3d& Mass::getPosition() const{return position;}
-const Vector3d& Mass::getVelocity() const{return velocity;}
-
-void Mass::take_step(){
-    this->position = this->nextPosition;
-    this->velocity = this->nextVelocity;
-   // std::cout << this << " ";
-}
 
 Mass::Mass(){
     this->position = Vector3d(0,0,0);
@@ -20,6 +12,30 @@ Mass::Mass(){
 
 Mass::Mass(double m, const Vector3d& pos, const Vector3d& vel) :
  mass(m), position(pos), velocity(vel), nextPosition(pos), nextVelocity(vel){}
+
+Mass::Mass(const std::string& descriptionString){
+    position = {0,0,0};
+    velocity = {0,0,0};
+
+    std::stringstream descriptionStream;
+    descriptionStream << descriptionString;
+    if(descriptionString.empty()) throw BadMassDescription("empty line in mass description");
+
+    descriptionStream >> name >> mass >> position[0] >> position[1] >> velocity[0] >> velocity[1];
+
+    nextPosition = position;
+    nextVelocity = velocity;
+}
+
+const Vector3d& Mass::getPosition() const{return position;}
+const Vector3d& Mass::getVelocity() const{return velocity;}
+
+void Mass::take_step(){
+    this->position = this->nextPosition;
+    this->velocity = this->nextVelocity;
+   // std::cout << this << " ";
+}
+
 
 double Mass::getKineticEnergy() const {
     return Physics::kineticEnergy(mass, velocity);
