@@ -6,7 +6,6 @@ Mass::Mass(){
     this->velocity = Vector3d(0,0,0);
     this->nextPosition = this->position;
     this->nextVelocity = this->velocity;
-    
     this->mass = 0;
 }
 
@@ -27,8 +26,7 @@ Mass::Mass(const std::string& descriptionString){
     nextVelocity = velocity;
 }
 
-const Vector3d& Mass::getPosition() const{return position;}
-const Vector3d& Mass::getVelocity() const{return velocity;}
+
 
 void Mass::take_step(){
     this->position = this->nextPosition;

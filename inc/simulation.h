@@ -66,8 +66,7 @@ class Simulation: public TDT4102::AnimationWindow{
 
     //rendering 
     std::chrono::time_point<std::chrono::system_clock> lastRender; 
-    std::chrono::milliseconds renderPeriod = std::chrono::milliseconds(20); //milli seconds
-
+    std::chrono::milliseconds renderPeriod = std::chrono::milliseconds(20);
 
     void update_window();
     void drawCenterOfMass();

@@ -17,9 +17,9 @@ class Mass{
 
     Vector3d nextPosition;
     Vector3d nextVelocity;
+
     std::string name; 
     
-    //std::vector<std::shared_ptr<Physics::Force>> forces;
 
     public:
     Mass();
@@ -30,20 +30,17 @@ class Mass{
     const Vector3d& setNextPosition(const Vector3d& next);
     const Vector3d& setNextVelocity(const Vector3d& next);
 
-
-    void take_step();
-    const Vector3d& getPosition() const;
-    const Vector3d& getVelocity() const;
-
+    const Vector3d& getPosition() const {return velocity;};
+    const Vector3d& getVelocity() const {return position;};
     const Vector3d& getNextVelocity() const {return nextVelocity;}
     const Vector3d& getNextPosition() const {return nextPosition;}
-
     double getMass() const {return mass;}
 
+    
+    void take_step();
     virtual void draw(TDT4102::AnimationWindow*){}
 
     double getKineticEnergy() const;
     double getNextKineticEnergy() const;
-
     Vector3d getMomentum() const;
 };

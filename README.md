@@ -18,4 +18,4 @@ loadFromFile(*filepath*):
     tar inn en txt fil der hver linje beskriver en masse på formen **massenavn**, **total masse**, **x posisjon**, **y posisjon**, **x hastighet**, **y hastighet**. hver linje sendes så inn i addPointMass
 
 
-
+Det er verdt å merke seg at programmet bruker gravitasjonskonstant $G = 1$ for å minimere sjansen for floating point errors. Dette gjør at enhetene for masse og lengde er forskjellige, jeg har ikke per nå regnet ut alternative enheter. Men like forholdstall vil gi lik oppførsel som med vanlig fysisk $G$.
