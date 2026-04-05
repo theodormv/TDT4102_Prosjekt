@@ -62,8 +62,6 @@ void Simulation::update(){
         lastRender = now;
     }
 
-
-
     iterations++;
 }
 
@@ -71,21 +69,17 @@ void Simulation::loadFromFile(std::string filepath){
     std::ifstream input(filepath);
     
     input.ignore(100, '\n');
-
-
-        
-        while(!input.eof()){
-            try{
-                std::string lineString;
-                getline(input, lineString);
-                addPointMass(lineString);
-            } catch (BadMassDescription& bmd){
-                std::cerr << "Error: " << bmd.what() << std::endl;
-            }
+    
+    while(!input.eof()){
+        try{
+            std::string lineString;
+            getline(input, lineString);
+            addPointMass(lineString);
+        } catch (BadMassDescription& bmd){
+            std::cerr << "Error: " << bmd.what() << std::endl;
         }
-
-        }
-
+    }
+}
 
 
 void Simulation::update_window(){

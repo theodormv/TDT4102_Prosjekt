@@ -18,6 +18,7 @@ Mass::Mass(const std::string& descriptionString){
 
     std::stringstream descriptionStream;
     descriptionStream << descriptionString;
+    
     if(descriptionString.empty()) throw BadMassDescription("empty line in mass description");
 
     descriptionStream >> name >> mass >> position[0] >> position[1] >> velocity[0] >> velocity[1];
